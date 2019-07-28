@@ -1,0 +1,72 @@
+//gradle统一配置
+ext {
+    //false 组件模式（可以打包成apk） true集成模式（app依赖的library）
+    isModule = true
+
+
+    //统一管理项目所有gradle配置
+    android = [
+            compileSdkVersion: 28,
+            minSdkVersion    : 15,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0",
+
+    ]
+
+    //配置v7版本
+    supportLibrary = "28.0.0"
+    dependencies = [
+            "appcompat-v7": "com.android.support:appcompat-v7:${supportLibrary}",
+            "constraint-layout":"com.android.support.constraint:constraint-layout:1.1.3",
+            "junit":"junit:junit:4.12",
+            "runner":"com.android.support.test:runner:1.0.2",
+            "espresso":"com.android.support.test.espresso:espresso-core:3.0.2",
+            "arouter-api":"com.alibaba:arouter-api:1.3.1",
+            "arouter-compiler":"com.alibaba:arouter-compiler:1.1.4",
+
+    ]
+
+
+}
+
+
+//gradle统一配置
+//ext {
+//    //false 组件模式（可以打包成apk） true集成模式（app依赖的library）
+//    isModule = true
+//    appId = [
+//            "app" : "cn.wqgallery.myarouter",
+//            "find": "cn.wqgallery.find",
+//            "home": "cn.wqgallery.home"
+//    ]
+//
+//    //有重用的地方写在这里面，保证代码一致
+//    android = [compileSdkVersion       : 26,
+//               buildToolsVersion       : "26.0.2",
+//               minSdkVersion           : 19,
+//               targetSdkVersion        : 26,
+//               versionCode             : 100000,
+//               versionName             : "1.0.0",
+//               androidSupportSdkVersion: "26.0.2",
+//               retrofitSdkVersion      : "2.0.0",
+//               dagger2SdkVersion       : "2.6",
+//               rxlifecycleSdkVersion   : "0.6.1",
+//               espressoSdkVersion      : "2.2.2"
+//    ]
+//    dependencies = [
+//            "javax.annotation" : 'javax.annotation:jsr250-api:1.0',
+//            "appcompat-v7"     : "com.android.support:appcompat-v7:${android["androidSupportSdkVersion"]}",
+//            "design"           : "com.android.support:design:${android["androidSupportSdkVersion"]}",
+//            "support-v4"       : "com.android.support:support-v4:${android["androidSupportSdkVersion"]}",
+//            "cardview-v7"      : "com.android.support:cardview-v7:${android["androidSupportSdkVersion"]}",
+//            "annotations"      : "com.android.support:support-annotations:${android["androidSupportSdkVersion"]}",
+//            "recyclerview-v7"  : "com.android.support:recyclerview-v7:${android["androidSupportSdkVersion"]}",
+//            "junit"                  : "junit:junit:4.12",
+//            "constraint-layout": 'com.android.support.constraint:constraint-layout:1.1.0',//约束性布局
+//
+//            "arouter-api"      : 'com.alibaba:arouter-api:1.3.1',//ARouter api
+//            "arouter-compiler" : 'com.alibaba:arouter-compiler:1.1.4',//ARouter
+//    ]
+//
+//}

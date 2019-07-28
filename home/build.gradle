@@ -1,0 +1,72 @@
+if (isModule) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
+
+//使用gradle统一配置管理文件
+def cfg = rootProject.ext.android
+def depend = rootProject.ext.dependencies
+
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+
+    defaultConfig {
+        //组件模式下
+        if (!isModule) {
+            applicationId "cn.wqgallery.home"
+        }
+        //ARouter配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        //配置mainfest
+        sourceSets {
+            main {
+                //在组件模式下 使用不同的manifest文件
+                if (isModule) {
+                    //依赖
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                } else {
+                    //apk
+                    manifest.srcFile 'src/main/module/AndroidManifest.xml'
+                    java.srcDirs 'src/main/module/java', 'src/main/java'
+                }
+            }
+        }
+
+
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation depend['appcompat-v7']
+    implementation depend['constraint-layout']
+    testImplementation depend['junit']
+    androidTestImplementation depend['runner']
+    androidTestImplementation depend['espresso']
+    //ARouter(每个需要跳转的module都要配置)
+    implementation depend['arouter-api']
+    annotationProcessor depend['arouter-compiler']
+
+    implementation project(':commonlib')
+}

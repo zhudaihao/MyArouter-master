@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+//使用gradle统一配置管理文件
+def cfg = rootProject.ext.android
+def depend = rootProject.ext.dependencies
+
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    defaultConfig {
+        applicationId "cn.wqgallery.myarouter"
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //ARouter配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation depend['appcompat-v7']
+    implementation depend["constraint-layout"]
+    testImplementation depend['junit']
+    androidTestImplementation depend['runner']
+    androidTestImplementation depend['espresso']
+    //ARouter(每个需要跳转的module都要配置)
+    implementation depend['arouter-api']
+    annotationProcessor depend['arouter-compiler']
+
+    implementation project(':commonlib')
+
+    if (isModule) {
+        implementation project(':home')
+        implementation project(':find')
+    }
+
+
+}
